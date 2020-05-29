@@ -13,6 +13,7 @@
           *
         from
           t_transactional_message_content
+        where message_id in ${ids}
     </select>
 
     <insert id="insert" parameterType="com.wy.entity.TransactionalMessageContent">

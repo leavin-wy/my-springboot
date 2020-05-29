@@ -2,6 +2,7 @@ package com.wy.dao;
 
 import com.wy.entity.TransactionalMessage;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -15,5 +16,5 @@ public interface TransactionalMessageMapper {
 
     List<TransactionalMessage> queryPendingCompensationRecords(LocalDateTime minScheduleTime,
                                                                LocalDateTime maxScheduleTime,
-                                                               int limit);
+                                                               @Param("limit") int limit);
 }

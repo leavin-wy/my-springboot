@@ -7,4 +7,6 @@ spring:
 mybatis:
   type-aliases-package: com.wy.entity
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 

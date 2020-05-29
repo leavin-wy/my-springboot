@@ -19,6 +19,7 @@
         from
           t_transactional_message
         where message_status = '0'
+        limit ${limit}
     </select>
 
     <insert id="insertSelective" parameterType="com.wy.entity.TransactionalMessage">
