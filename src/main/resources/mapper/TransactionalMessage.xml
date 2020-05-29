@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace= "com.wy.dao.TransactionalMessageMapper" >
+    <resultMap id ="MsgMap" type="com.wy.entity.TransactionalMessage">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="message_status" property="messageStatus"/>
+        <result column="next_schedule_time" property="nextScheduleTime" jdbcType="VARCHAR"/>
+        <result column="current_retry_times" property="currentRetryTimes" jdbcType="INTEGER"/>
+        <result column="max_retry_times" property="maxRetryTimes" jdbcType="INTEGER"/>
+        <result column="edit_time" property="editTime" jdbcType="VARCHAR"/>
+        <result column="queue_name" property="queueName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id = "queryPendingCompensationRecords" resultMap="MsgMap">
+        select
+          *
+        from
+          t_transactional_message
+        where message_status = '0'
+    </select>
+
+    <insert id="insertSelective" parameterType="com.wy.entity.TransactionalMessage">
+        insert into t_transactional_message (id,creator,editor,deleted,queue_name,
+                     exchange_name,exchange_type,routing_key,business_module,
+                     business_key,message_status,next_schedule_time,
+                     current_retry_times,init_backoff,backoff_factor,max_retry_times )
+        values (#{id},#{creator},#{editor},#{deleted},#{queueName},
+                #{exchangeName},#{exchangeType},#{routingKey},#{businessModule},
+                #{businessKey},#{messageStatus},#{nextScheduleTime},
+                #{currentRetryTimes},#{initBackoff},#{backoffFactor},#{maxRetryTimes})
+    </insert>
+
+    <update id="updateStatusSelective" parameterType="com.wy.entity.TransactionalMessage">
+        update t_transactional_message
+        set message_status = #{messageStatus},next_schedule_time = #{nextScheduleTime},
+            current_retry_times = #{currentRetryTimes},edit_time = #{editTime}
+        where id = #{id}
+    </update>
+</mapper>

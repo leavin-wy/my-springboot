@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace= "com.wy.dao.TransactionalMessageContentMapper" >
+    <resultMap id ="ContentMap" type="com.wy.entity.TransactionalMessageContent">
+        <result column="id" property="id"/>
+        <result column="message_id" property="messageId"/>
+        <result column="content" property="content"/>
+    </resultMap>
+
+    <select id = "queryByMessageIds" parameterType="java.lang.String" resultMap="ContentMap">
+        select
+          *
+        from
+          t_transactional_message_content
+    </select>
+
+    <insert id="insert" parameterType="com.wy.entity.TransactionalMessageContent">
+        insert into t_transactional_message_content (id,message_id,content) values (#{id},#{messageId},#{content})
+    </insert>
+</mapper>
